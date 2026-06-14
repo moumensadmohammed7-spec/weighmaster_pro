@@ -1,0 +1,6 @@
+name: aljisar_alwazin
+description: A new Flutter project
+
+dependencies:
+  flutter:
+    sdk: flutter
