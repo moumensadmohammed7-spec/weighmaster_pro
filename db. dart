@@ -1,0 +1,48 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+class DB {
+  static Database? db;
+
+  static Future<Database> init() async {
+    if (db != null) return db!;
+
+    db = await openDatabase(
+      join(await getDatabasesPath(), 'weighmaster.db'),
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE weights(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            truck TEXT,
+            entry REAL,
+            exit REAL,
+            net REAL,
+            date TEXT
+          )
+        ''');
+      },
+    );
+
+    return db!;
+  }
+
+  static Future<void> insert(String truck, double entry, double exit) async {
+    final database = await init();
+
+    double net = exit - entry;
+
+    await database.insert('weights', {
+      'truck': truck,
+      'entry': entry,
+      'exit': exit,
+      'net': net,
+      'date': DateTime.now().toString(),
+    });
+  }
+
+  static Future<List<Map>> getAll() async {
+    final database = await init();
+    return await database.query('weights', orderBy: "id DESC");
+  }
+}
