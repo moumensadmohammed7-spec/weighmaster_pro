@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'db.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await DB.init();
-  runApp(MyApp());
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: Home(),
+      home: Scaffold(
+        body: Center(
+          child: Text('WeighMaster Pro'),
+        ),
+      ),
     );
   }
 }
