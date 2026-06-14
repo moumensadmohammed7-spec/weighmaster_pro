@@ -1,6 +1,9 @@
 name: aljisar_alwazin
 description: A new Flutter project
 
+environment:
+  sdk: '^3.12.0'
+
 dependencies:
   flutter:
     sdk: flutter
